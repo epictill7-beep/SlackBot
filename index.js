@@ -24,7 +24,7 @@ app.command("/legen-commands", async ({ command, ack, respond }) => {
         /legen-ping -> see bot latency
         /legen-commands -> get to this menu
         /legen-randomArt -> get random art piece
-        /legen-getTimeZones #
+        /legen-getEST #
         /legen-getJoke #
         /legen-factCheck <query> #
         /legen-catImage #`
@@ -44,19 +44,30 @@ app.command("/legen-randomArt", async ({ command, ack, respond }) => {
     await ack();
     const axios = require("axios");
     try{
-        const response = await axios.get(
-            "https://api.artic.edu/api/v1/artworks"
-        );
+        const response = await axios.get("https://api.artic.edu/api/v1/artworks");
         const artwork = response.data.data[0]; // in response.data you go into the data and choose the first artwork in the array of data
         console.log(artwork.image_id);
         const imageUrl = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`; // image url
-        await respond(
-            `${artwork.title}\nArtist: ${artword.artist_title}\n img url: ${imageUrl}`);  // paste the art title and artist name based on the data and image url
+        await respond(`${artwork.title}\nArtist: ${artword.artist_title}\n img url: ${imageUrl}`);  // paste the art title and artist name based on the data and image url
     }
     catch(error) {
         await respond("Could not fetch artwork.");
     }
 });
+
+/*app.command("/legen-ThemeOfBook <", async ({ command, ack, respond }) => {
+    await ack();
+    const axios = require("axios")
+    try{
+        const response = await axios.get("https://www.penguinrandomhouse.biz/webservices/rest/#titles", {params: {
+            start: 0, max: 10, expandLevel: 1 }})
+    }
+    catch(error){
+        await respond("Error occured looking for the book")
+    }
+});*/ // might be a tid bit over my skill level idk
+
+//app.command("/legen-paste10Times <text>") <- too lazy do better
 
 (async () => {
   await app.start();
