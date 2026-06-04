@@ -41,6 +41,7 @@ app.command("/legen-randomart", async ({ command, ack, respond }) => {
         await respond(`${artwork.title}\nArtist: ${artword.artist_title}\n img url: ${imageUrl}`);  // paste the art title and artist name based on the data and image url
     }
     catch(error) {
+        console.error(error)
         await respond("Could not fetch artwork.");
     }
 });
@@ -57,6 +58,7 @@ app.command("/legen-randcolor", async ({ command, ack, respond }) => {
         const val = response.colors.color.hsv.value;
         await respond(`${title}\n id: ${id}\n hex: ${hex}\n hue: ${hue}\n saturation: ${sat}\n value: ${val}`)
     } catch(error){
+        console.error(error)
         await respond("Could not fetch random color.")
     }
 });
@@ -68,6 +70,7 @@ app.command("/legen-catimage", async ({ command, ack, respond }) => {
         const url = "https://cataas.com/cat";
         await respond({ blocks: [{ type: "image", image_url: url}]}); // using block to show the image
     } catch(error) {
+        console.error(error)
         await respond("Could not fetch random cat image");
     }
 });
