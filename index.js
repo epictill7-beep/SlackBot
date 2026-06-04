@@ -24,14 +24,14 @@ app.command("/legen-commands", async ({ command, ack, respond }) => {
         `## Legen\'s commands ##
         /legen-ping -> see bot latency
         /legen-commands -> get to this menu
-        /legen-randomArt -> get random art piece
-        /legen-randColor -> get random color
+        /legen-randomart -> get random art piece
+        /legen-randcolor -> get random color
         /legen-getJoke #
-        /legen-catImage -> get random cat image`
+        /legen-catimage -> get random cat image`
     });
 });
 
-app.command("/legen-randomArt", async ({ command, ack, respond }) => {
+app.command("/legen-randomart", async ({ command, ack, respond }) => {
     await ack();
     try{
         const response = await axios.get("https://api.artic.edu/api/v1/artworks");
@@ -45,7 +45,7 @@ app.command("/legen-randomArt", async ({ command, ack, respond }) => {
     }
 });
 
-app.command("/legen-randColor", async ({ command, ack, respond }) => {
+app.command("/legen-randcolor", async ({ command, ack, respond }) => {
     await ack();
     try{
         const response = await axios.get("http://www.colourlovers.com/api/colors/random")
@@ -61,14 +61,15 @@ app.command("/legen-randColor", async ({ command, ack, respond }) => {
     }
 });
 
-app.command("/legen-catImage", async ({ command, ack, respond }) => {
+app.command("/legen-catimage", async ({ command, ack, respond }) => {
     await ack();
-    try{
+    await respond("cat comment worked!");
+    /*try{
         const url = "https://cataas.com/cat";
         await respond({ blocks: [{ type: "image", image_url: url}]}); // using block to show the image
     } catch(error) {
         await respond("Could not fetch random cat image");
-    }
+    }*/
 });
 
 (async () => {
