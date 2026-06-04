@@ -64,12 +64,12 @@ app.command("/legen-randcolor", async ({ command, ack, respond }) => {
 app.command("/legen-catimage", async ({ command, ack, respond }) => {
     await ack();
     await respond("cat comment worked!");
-    /*try{
+    try{
         const url = "https://cataas.com/cat";
         await respond({ blocks: [{ type: "image", image_url: url}]}); // using block to show the image
     } catch(error) {
         await respond("Could not fetch random cat image");
-    }*/
+    }
 });
 
 (async () => {
