@@ -38,7 +38,7 @@ app.command("/legen-randomart", async ({ command, ack, respond }) => {
         const artwork = response.data.data[0]; // in response.data you go into the data and choose the first artwork in the array of data
         console.log(artwork.image_id);
         const imageUrl = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`; // image url
-        await respond(`${artwork.title}\nArtist: ${artword.artist_title}\n img url: ${imageUrl}`);  // paste the art title and artist name based on the data and image url
+        await respond(`${artwork.title}\nArtist: ${artwork.artist_title}\n img url: ${imageUrl}`);  // paste the art title and artist name based on the data and image url
     }
     catch(error) {
         console.error(error)
@@ -50,6 +50,7 @@ app.command("/legen-randcolor", async ({ command, ack, respond }) => {
     await ack();
     try{
         const response = await axios.get("http://www.colourlovers.com/api/colors/random")
+        console.log(response.data);
         const id = response.colors.color.id;
         const title = response.colors.color.title;
         const hex = response.colors.color.hex;
