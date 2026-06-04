@@ -1,5 +1,6 @@
 
 require("dotenv").config();
+const axios = require("axios");
 
 const { App } = require("@slack/bolt");
 
@@ -24,25 +25,14 @@ app.command("/legen-commands", async ({ command, ack, respond }) => {
         /legen-ping -> see bot latency
         /legen-commands -> get to this menu
         /legen-randomArt -> get random art piece
-        /legen-getEST #
+        /legen-randColor -> get random color
         /legen-getJoke #
-        /legen-factCheck <query> #
-        /legen-catImage #`
+        /legen-catImage -> get random cat image`
     });
 });
 
-/*app.command("/legen-getTimeZones", async ({ command, ack, respond }) => {
-    await ack();
-    try{
-        const response = await axios.get("")
-    }
-
-    })
-});*/
-
 app.command("/legen-randomArt", async ({ command, ack, respond }) => {
     await ack();
-    const axios = require("axios");
     try{
         const response = await axios.get("https://api.artic.edu/api/v1/artworks");
         const artwork = response.data.data[0]; // in response.data you go into the data and choose the first artwork in the array of data
@@ -55,19 +45,31 @@ app.command("/legen-randomArt", async ({ command, ack, respond }) => {
     }
 });
 
-/*app.command("/legen-ThemeOfBook <", async ({ command, ack, respond }) => {
+app.command("/legen-randColor", async ({ command, ack, respond }) => {
     await ack();
-    const axios = require("axios")
     try{
-        const response = await axios.get("https://www.penguinrandomhouse.biz/webservices/rest/#titles", {params: {
-            start: 0, max: 10, expandLevel: 1 }})
+        const response = await axios.get("http://www.colourlovers.com/api/colors/random")
+        const id = response.colors.color.id;
+        const title = response.colors.color.title;
+        const hex = response.colors.color.hex;
+        const hue = response.colors.color.hsv.hue;
+        const sat = response.colors.color.hsv.saturation;
+        const val = response.colors.color.hsv.value;
+        await respond(`${title}\n id: ${id}\n hex: ${hex}\n hue: ${hue}\n saturation: ${sat}\n value: ${val}`)
+    } catch(error){
+        await respond("Could not fetch random color.")
     }
-    catch(error){
-        await respond("Error occured looking for the book")
-    }
-});*/ // might be a tid bit over my skill level idk
+});
 
-//app.command("/legen-paste10Times <text>") <- too lazy do better
+app.command("/legen-catImage", async ({ command, ack, respond }) => {
+    await ack();
+    try{
+        const url = "https://cataas.com/cat";
+        await respond({ blocks: [{ type: "image", image_url: url}]}); // using block to show the image
+    } catch(error) {
+        await respond("Could not fetch random cat image");
+    }
+});
 
 (async () => {
   await app.start();
