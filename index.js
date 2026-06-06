@@ -35,10 +35,12 @@ app.command("/legen-randomart", async ({ command, ack, respond }) => {
     await ack();
     try{
         const response = await axios.get("https://api.artic.edu/api/v1/artworks");
-        const artwork = response.data.data[0]; // in response.data you go into the data and choose the first artwork in the array of data
+        const artworks = response.data.data;
+        const rand = Math.floor(Math.random() * artworks.length);
+        const artwork = response.data.data[rand];
         console.log(artwork.image_id);
         const imageUrl = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`; // image url
-        await respond(`${artwork.title}\nArtist: ${artwork.artist_title}\n img url: ${imageUrl}`);  // paste the art title and artist name based on the data and image url
+        await respond(`${artwork.title}\nArtist: ${artwork.artist_title}\nimg url: ${imageUrl}`);  // paste the art title and artist name based on the data and image url
     }
     catch(error) {
         console.error(error)
@@ -57,7 +59,7 @@ app.command("/legen-randcolor", async ({ command, ack, respond }) => {
         const hue = response.colors.color.hsv.hue;
         const sat = response.colors.color.hsv.saturation;
         const val = response.colors.color.hsv.value;
-        await respond(`${title}\n id: ${id}\n hex: ${hex}\n hue: ${hue}\n saturation: ${sat}\n value: ${val}`)
+        await respond(`${title}\nid: ${id}\nhex: ${hex}\nhue: ${hue}\nsaturation: ${sat}\nvalue: ${val}`)
     } catch(error){
         console.error(error)
         await respond("Could not fetch random color.")
