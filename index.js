@@ -34,7 +34,7 @@ app.command("/legen-commands", async ({ command, ack, respond }) => {
 app.command("/legen-randomart", async ({ command, ack, respond }) => {
     await ack();
     try{
-        const response = await axios.get("https://api.artic.edu/api/v1/artworks", {
+        const response = await axios.post("https://api.artic.edu/api/v1/artworks/search", {
         params:{
             query:{
                 bool:{
@@ -53,7 +53,7 @@ app.command("/legen-randomart", async ({ command, ack, respond }) => {
         if(!artworks || artworks.length === 0) {
             return await respond("no paintings found");
         }
-        
+
         const rand = Math.floor(Math.random() * artworks.length);
         const artwork = response.data.data[rand];
 
