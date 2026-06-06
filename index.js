@@ -35,7 +35,6 @@ app.command("/legen-randomart", async ({ command, ack, respond }) => {
     await ack();
     try{
         const response = await axios.post("https://api.artic.edu/api/v1/artworks/search", {
-        params:{
             query:{
                 bool:{
                     must:[
@@ -46,7 +45,6 @@ app.command("/legen-randomart", async ({ command, ack, respond }) => {
             },
             fields: "id, title, artist_title, image_id", // only the stuff we need
             limit: 25 // 25 to choose from
-        }
     });
         const artworks = response.data.data;
 
