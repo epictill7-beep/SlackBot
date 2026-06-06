@@ -31,7 +31,7 @@ app.command("/legen-commands", async ({ command, ack, respond }) => {
     });
 });
 
-/*app.command("/legen-randomart", async ({ command, ack, respond }) => {
+app.command("/legen-randomart", async ({ command, ack, respond }) => {
     await ack();
     try{
         const response = await axios.get("https://api.artic.edu/api/v1/artworks");
@@ -46,7 +46,7 @@ app.command("/legen-commands", async ({ command, ack, respond }) => {
         console.error(error)
         await respond("Could not fetch artwork.");
     }
-});*/
+});
 
 app.command("/legen-randcolor", async ({ command, ack, respond }) => {
     await ack();
