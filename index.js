@@ -38,9 +38,17 @@ app.command("/legen-randomart", async ({ command, ack, respond }) => {
         const artworks = response.data.data;
         const rand = Math.floor(Math.random() * artworks.length);
         const artwork = response.data.data[rand];
-        console.log(artwork.image_id);
-        const imageUrl = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`; // image url
-        await respond(`${artwork.title}\nArtist: ${artwork.artist_title}\nimg url: ${imageUrl}`);  // paste the art title and artist name based on the data and image url
+
+        const title = artwork.title || "untitled";
+        const artist = artwork.artist_title || "unknown artist";
+
+        const url = response.data.config.iiif_url;
+
+        let imageUrl = "no image available for this piece of art"
+        if(artwork.image_id){
+            imageUrl = `${url}/${artwork.image_id}/full/843,/0/default.jpg`;
+        }
+        await respond(`${title}\nArtist: ${artist}\nimg url: ${imageUrl}`);  // paste the art title and artist name based on the data and image url
     }
     catch(error) {
         console.error(error)
