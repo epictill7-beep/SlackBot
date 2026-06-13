@@ -76,14 +76,10 @@ app.command("/legen-randcolor", async ({ command, ack, respond }) => {
     await ack();
     try{
         const response = await axios.get("http://www.colourlovers.com/api/colors/random")
-        console.log(response.data);
-        const id = response.colors.color.id;
-        const title = response.colors.color.title;
-        const hex = response.colors.color.hex;
-        const hue = response.colors.color.hsv.hue;
-        const sat = response.colors.color.hsv.saturation;
-        const val = response.colors.color.hsv.value;
-        await respond(`${title}\nid: ${id}\nhex: ${hex}\nhue: ${hue}\nsaturation: ${sat}\nvalue: ${val}`)
+        console.log(typeof response.data);
+        console.log(response.data)
+        //const id =
+        //await respond(`${title}\nid: ${id}\nhex: ${hex}\nhue: ${hue}\nsaturation: ${sat}\nvalue: ${val}`)
     } catch(error){
         console.error(error)
         await respond("Could not fetch random color.")
