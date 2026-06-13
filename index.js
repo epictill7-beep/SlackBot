@@ -89,10 +89,12 @@ app.command("/legen-randcolor", async ({ command, ack, respond }) => {
 
 app.command("/legen-catimage", async ({ command, ack, respond }) => {
     await ack();
-    await respond("cat comment worked!");
+    //await respond("cat command worked!");
     try{
-        const url = "https://cataas.com/cat";
-        await respond({ blocks: [{ type: "image", image_url: url}]}); // using block to show the image
+        const response = await axios.get('https://api.thecatapi.com/v1/images/search'); // gonna get data from api
+        const url = response.data[0].url;
+        console.log("url obtained: ", url);
+        await respond({ blocks: [{ type: "image", image_url: url, alt_text: "cute cat"}]}); // using block to show the image
     } catch(error) {
         console.error(error)
         await respond("Could not fetch random cat image");
