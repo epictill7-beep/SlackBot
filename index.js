@@ -26,7 +26,6 @@ app.command("/legen-commands", async ({ command, ack, respond }) => {
         /legen-commands -> get to this menu
         /legen-randomart -> get random art piece
         /legen-randcolor -> get random color
-        /legen-getJoke #
         /legen-catimage -> get random cat image`
     });
 });
@@ -93,7 +92,7 @@ app.command("/legen-catimage", async ({ command, ack, respond }) => {
     try{
         const response = await axios.get('https://api.thecatapi.com/v1/images/search'); // gonna get data from api
         const url = response.data[0].url;
-        console.log("url obtained: ", url);
+        //console.log("url obtained: ", url);
         await respond({ blocks: [{ type: "image", image_url: url, alt_text: "cute cat"}]}); // using block to show the image
     } catch(error) {
         console.error(error)
